@@ -1,4 +1,4 @@
-{% set leancloud_uri = '//cdn1.lncld.net/static/js/3.11.1/av-min.js' %}
+{% set leancloud_uri = '//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js' %}
 {% if theme.vendors.leancloud %}
   {% set leancloud_uri = theme.vendors.leancloud %}
 {% endif %}
