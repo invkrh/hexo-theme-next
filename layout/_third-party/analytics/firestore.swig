@@ -1,21 +1,17 @@
 {% if theme.firestore.enable %}
-  <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-auth.js"></script>
   <script>
     (function () {
-      function setCount(docRef, count) {
-        docRef.set({ count: count })
-      }
-
       function getCount(docRef) {
         return docRef.get().then(function (doc) {
           if (!doc.exists) {
             return 0;
           } else {
-            return doc.data().count
+            return doc.data().count;
           }
-        })
+        });
       }
 
       // TODO: use distributed counter
@@ -24,13 +20,18 @@
         return getCount(docRef).then(
           function(count) {
             if (firstOnly && window.localStorage) {
-              if (!window.localStorage.getItem('{{ post.title }}')) { // the article is viewed for the first time
+              if (!window.localStorage.getItem('{{ page.title }}')) { // the article is viewed for the first time
                 // increase count in firestore
-                setCount(docRef, count + 1)
-                localStorage.setItem('{{ post.title }}', true)
+                docRef.set({ count: count + 1 })
+                .then(function() {
+                  localStorage.setItem('{{ page.title }}', true);
+                })
+                .catch(function(error) {
+                  console.error("Error writing document: ", error);
+                });
               }
             } else {
-              setCount(docRef, count + 1)
+              docRef.set({ count: count + 1 });
             }
           })
       }
@@ -53,7 +54,7 @@
                       .addClass('fa fa-eye')))
                 .append(
                   $('<span>')
-                  .text('{{ __('post.views') }} ' + count)))
+                  .text('{{ __('post.views') }} ' + count)));
         }
       }
 
@@ -63,24 +64,24 @@
           var docRef = articles.doc('{{ page.title }}')
           increaseCount(docRef, true)
             .then(function() { return getCount(docRef) })
-            .then(appendCount2PostMeta($('.post-meta')))
+            .then(appendCount2PostMeta($('.post-meta')));
         } else if ({{ is_home() }}) { //is index page
-          var titles = [] //array to titles
+          var titles = []; //array to titles
 
           {% for post in page.posts %}
-            titles.push('{{ post.title }}')
+            titles.push('{{ post.title }}');
           {% endfor %}
 
           var promises = titles.map(function (title) {
-            return articles.doc(title)
+            return articles.doc(title);
           }).map(function (docRef) {
-            return getCount(docRef)
+            return getCount(docRef);
           })
 
           Promise.all(promises).then(function (counts) {
-            var metas = $('.post-meta')
+            var metas = $('.post-meta');
             counts.forEach(function (val, idx) {
-              appendCount2PostMeta(metas[idx])(val)
+              appendCount2PostMeta(metas[idx])(val);
             })
           })
         }
@@ -94,21 +95,16 @@
 
       firebase.initializeApp(config);
 
-      var db = firebase.firestore()
+      var db = firebase.firestore();
 
-      db.settings({
-        timestampsInSnapshots: true
-      });
+      var articles = db.collection('{{ theme.firestore.collection }}');
 
-      var articles = db.collection('{{ theme.firestore.collection }}')
-
-      //*
       firebase.auth().signInAnonymously().catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
-        console.log(errorCode)
-        console.log(errorMessage)
+        console.log(errorCode);
+        console.log(errorMessage);
       });
 
       /*
@@ -117,18 +113,18 @@
       ===>
       Only request from authorized domain can increase counter.
       */
+
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
           // User is signed in.
           var isAnonymous = user.isAnonymous;
           var uid = user.uid;
-          countRead()
+          countRead();
         } else {
           // User is signed out.
           // ...
         }
       });
-      //*/
     })()
   </script>
 {% endif %}
