@@ -50,8 +50,8 @@ favicon:
   medium: /icons/favicon-32x32.png # /images/favicon-32x32-next.png
   apple_touch_icon: /icons/apple-touch-icon-next.png # /images/apple-touch-icon-next.png
   safari_pinned_tab: /icons/safari-pinned-tab.svg # /images/logo.svg
-  android_manifest: /icons/manifest.json # /images/manifest.json
-  ms_browserconfig: /icons/browserconfig.xml # /images/browserconfig.xml
+  # android_manifest: /icons/manifest.json # /images/manifest.json
+  # ms_browserconfig: /icons/browserconfig.xml # /images/browserconfig.xml
 
 # Set rss to false to disable feed link.
 # Leave rss as empty to use site's feed link, and install hexo-generator-feed: `npm install hexo-generator-feed --save`.
