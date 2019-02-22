@@ -22,6 +22,8 @@
   {% include '_third-party/analytics/index.swig' %}
   {% include '_third-party/chart/index.swig' %}
   {{ partial('_scripts/noscript.swig', {}, {cache: theme.cache.enable}) }}
+
+  <link rel="stylesheet" href="/css/prism.css">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="{{ page.lang || page.language || config.language }}">
@@ -123,5 +125,8 @@
   {% include '_third-party/copy-code.swig' %}
   {% include '_third-party/chatra.swig' %}
   {% include '_third-party/tidio.swig' %}
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+  <script type="text/javascript" src="/js/prism.js"></script>
 </body>
 </html>

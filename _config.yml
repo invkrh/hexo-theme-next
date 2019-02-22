@@ -360,15 +360,14 @@ symbols_count_time:
 codeblock:
   # Manual define the border radius in codeblock
   # Leave it empty for the default 1
-  border_radius: 10
+  border_radius:
   # Add copy button on codeblock
   copy_button:
-    enable: true
+    enable: false
     # Show text copy result
-    show_result: true
+    show_result: false
     # Style: only 'flat' is currently available, leave it blank if you prefer default theme
     style:
-
 
 # Wechat Subscriber
 wechat_subscriber:
@@ -479,14 +478,12 @@ font:
   global: # mono, sans serif
     external: true
     family: Roboto
-    # size: 18
 
   # Font settings for Headlines (H1, H2, H3, H4, H5, H6).
   # Fallback to `global` font settings.
   headings: # mono, sans serif
     external: true
     family: Lato
-    size:
 
   # Font settings for posts.
   # Fallback to `global` font settings.
@@ -504,7 +501,6 @@ font:
   codes: # mono, sans serif
     external: true
     family: Consolas
-    # size: 18
 
 
 # ---------------------------------------------------------------
