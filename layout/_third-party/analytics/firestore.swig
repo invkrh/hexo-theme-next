@@ -64,12 +64,14 @@
           var docRef = articles.doc('{{ page.title }}')
           increaseCount(docRef, true)
             .then(function() { return getCount(docRef) })
-            .then(appendCount2PostMeta($('.post-meta')));
+            .then(appendCount2PostMeta($('.post-meta'))); // only one post-meta class for post page
         } else if ({{ is_home() }}) { //is index page
           var titles = []; //array to titles
 
           {% for post in page.posts %}
-            titles.push('{{ post.title }}');
+            if ({{ !post.hide }}) {
+              titles.push('{{ post.title }}');
+            }
           {% endfor %}
 
           var promises = titles.map(function (title) {
@@ -79,7 +81,7 @@
           })
 
           Promise.all(promises).then(function (counts) {
-            var metas = $('.post-meta');
+            var metas = $('.post-meta'); // all the post-meta classes for current index page
             counts.forEach(function (val, idx) {
               appendCount2PostMeta(metas[idx])(val);
             })
