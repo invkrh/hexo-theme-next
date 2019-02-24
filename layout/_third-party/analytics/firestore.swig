@@ -69,9 +69,7 @@
           var titles = []; //array to titles
 
           {% for post in page.posts %}
-            if ({{ !post.hide }}) {
-              titles.push('{{ post.title }}');
-            }
+            titles.push('{{ post.title }}');
           {% endfor %}
 
           var promises = titles.map(function (title) {
