@@ -15,25 +15,24 @@
       }
 
       // TODO: use distributed counter
-      // Return a Promise
-      function increaseCount(docRef, firstOnly) {
-        return getCount(docRef).then(
-          function(count) {
-            if (firstOnly && window.localStorage) {
-              if (!window.localStorage.getItem('{{ page.title }}')) { // the article is viewed for the first time
-                // increase count in firestore
-                docRef.set({ count: count + 1 })
-                .then(function() {
-                  localStorage.setItem('{{ page.title }}', true);
-                })
-                .catch(function(error) {
-                  console.error("Error writing document: ", error);
-                });
-              }
-            } else {
-              docRef.set({ count: count + 1 });
+      function increaseCount(docRef, firstViewOnly) {
+        return function (prevCount) {
+          if (firstViewOnly && window.localStorage) {
+            // increase view count if the article is viewed for the first time
+            // increase view count in case the doc is removed
+            if (!window.localStorage.getItem('{{ page.title }}') || prevCount == 0) {
+              docRef.set({ count: prevCount + 1 })
+              .then(function() {
+                localStorage.setItem('{{ page.title }}', true);
+              })
+              .catch(function(error) {
+                console.error("Error writing document: ", error);
+              });
             }
-          })
+          } else {
+            docRef.set({ count: prevCount + 1 });
+          }
+        }
       }
 
       function appendCount2PostMeta(el) {
@@ -62,7 +61,8 @@
         // See: https://hexo.io/docs/helpers.html
         if ({{ is_post() }}) { //is article page
           var docRef = articles.doc('{{ page.title }}')
-          increaseCount(docRef, true)
+          getCount(docRef)
+            .then(increaseCount(docRef, true))
             .then(function() { return getCount(docRef) })
             .then(appendCount2PostMeta($('.post-meta'))); // only one post-meta class for post page
         } else if ({{ is_home() }}) { //is index page
