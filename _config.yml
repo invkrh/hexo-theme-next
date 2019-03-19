@@ -501,6 +501,7 @@ font:
   codes: # mono, sans serif
     external: true
     family: Consolas
+    size: 16
 
 
 # ---------------------------------------------------------------
