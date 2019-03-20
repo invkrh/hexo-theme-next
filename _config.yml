@@ -477,7 +477,7 @@ font:
   # Global font settings used for all elements in <body>.
   global: # mono, sans serif
     external: true
-    family: Roboto
+    family: Monda
 
   # Font settings for Headlines (H1, H2, H3, H4, H5, H6).
   # Fallback to `global` font settings.
@@ -489,7 +489,7 @@ font:
   # Fallback to `global` font settings.
   posts: # serif
     external: true
-    family: Merriweather
+    family: Raleway
 
   # Font settings for Logo.
   # Fallback to `global` font settings.
