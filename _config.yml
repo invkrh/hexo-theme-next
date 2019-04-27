@@ -505,7 +505,7 @@ math:
   # If you set it to false, it will load mathjax / katex srcipt EVERY PAGE.
   per_page: false
 
-  # engine: mathjax
+  # engine: katex
   engine: mathjax
 
   # hexo-rendering-pandoc (or hexo-renderer-kramed) needed to full MathJax support.
