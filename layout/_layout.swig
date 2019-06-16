@@ -24,7 +24,6 @@
   {{ partial('_scripts/noscript.swig', {}, {cache: theme.cache.enable}) }}
 
   <link rel="stylesheet" href="/css/prism.css">
-  <link rel="stylesheet" href="/css/mathjax-md.css">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="{{ page.lang || page.language || config.language }}">
